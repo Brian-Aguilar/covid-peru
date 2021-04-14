@@ -18,10 +18,10 @@ const {
   convertirFechaES,
 } = require("../utilidades/fechas");
 const {
-  ordernarDatosEnterosAscendente,
   filtrarDatosEspecificos,
   sumarDatosEnArray,
   ordenarDatosDescendentes,
+  ordernarDatosEnterosDescendentes,
 } = require("../utilidades/filtros");
 const mensaje = require("../utilidades/console");
 
@@ -107,7 +107,7 @@ const crearArchivoJSON = (fecha, datosSS, nombreDelArchivoPorFecha) => {
 
   const obtenerfecha = datosDeFecha.filter((fecha) => fecha.id === datos.id);
   if (obtenerfecha.length == 0) {
-    datosDeFecha = ordernarDatosEnterosAscendente(
+    datosDeFecha = ordernarDatosEnterosDescendentes(
       [datos, ...datosDeFecha],
       "id"
     );
