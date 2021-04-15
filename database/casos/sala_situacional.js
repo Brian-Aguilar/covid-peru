@@ -20,7 +20,6 @@ const {
 const {
   filtrarDatosEspecificos,
   sumarDatosEnArray,
-  ordenarDatosDescendentes,
   ordernarDatosEnterosDescendentes,
   ordernarDatosAscendente,
 } = require("../utilidades/filtros");
@@ -118,11 +117,7 @@ const crearArchivoJSON = (fecha, datosSS, nombreDelArchivoPorFecha) => {
       `fecha ${convertirFechaES(fecha, "/")} se agrego`
     );
     const datosCompleto = { ...obtenerDatosTotales(datosSS), datos: datosSS };
-    crearArchivo(
-      nombreDelArchivoPorFecha,
-      ordenarDatosDescendentes(datosCompleto, "id"),
-      true
-    );
+    crearArchivo(nombreDelArchivoPorFecha, datosCompleto, true);
   } else {
     mensaje(
       "Sala Situacional",
