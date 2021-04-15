@@ -22,6 +22,7 @@ const {
   sumarDatosEnArray,
   ordenarDatosDescendentes,
   ordernarDatosEnterosDescendentes,
+  ordernarDatosAscendente,
 } = require("../utilidades/filtros");
 const mensaje = require("../utilidades/console");
 
@@ -59,7 +60,7 @@ const crearSalaSituacional = async (fecha) => {
 
     crearArchivoJSON(
       fecha,
-      ordenarDatosDescendentes(datosObtenidos, "departamento"),
+      ordernarDatosAscendente(datosObtenidos, "departamento"),
       archivoJSON
     );
 
@@ -117,7 +118,11 @@ const crearArchivoJSON = (fecha, datosSS, nombreDelArchivoPorFecha) => {
       `fecha ${convertirFechaES(fecha, "/")} se agrego`
     );
     const datosCompleto = { ...obtenerDatosTotales(datosSS), datos: datosSS };
-    crearArchivo(nombreDelArchivoPorFecha, datosCompleto, true);
+    crearArchivo(
+      nombreDelArchivoPorFecha,
+      ordenarDatosDescendentes(datosCompleto, "id"),
+      true
+    );
   } else {
     mensaje(
       "Sala Situacional",
@@ -146,6 +151,12 @@ const obtenerDatosTotales = (datos) => {
   };
 };
 
+const obtenerFechas = () => {
+  const nombreDelArchivo = "./data/fechas.json";
+  return leerArchivo(nombreDelArchivo, true);
+};
+
 module.exports = {
   crearSalaSituacional,
+  obtenerFechas,
 };
