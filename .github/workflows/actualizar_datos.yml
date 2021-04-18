@@ -1,30 +1,27 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
+name: actualizar_datos
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    # Se ejecutrar todos los dias a las 6:00 PM hora peruana
+    - cron: 00 23 * * *
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - uses: actions/checkout@v2
+      - name: Obtener Fecha
+        run: echo "NOW=$(date +'%Y-%m-%d - %H:%M:%S UTC 00')" >> $GITHUB_ENV
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - run: npm i -D download node-fetch papaparse xlsx
+      - run: npm run actualizar
+      - run: git config user.name 'Brian Aguilar D'
+      - run: git config user.email 'aguilar.16999@gmail.com'
+      - run: git add .
+      - run: git commit -m 'Fecha actualizada $NOW'
+      - run: git push
