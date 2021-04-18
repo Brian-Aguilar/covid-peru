@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Obtener Fecha
-        run: echo "NOW=$(date +'%Y-%m-%d - %H:%M:%S UTC 00')" >> $GITHUB_ENV
+        run: echo "NOW=$(date +'%d/%m/%Y - %H:%M:%S UTC 00')" >> $GITHUB_ENV
       - name: Use Node.js 14.x
         uses: actions/setup-node@v2
         with:
