@@ -1,16 +1,21 @@
 import Head from "next/head";
+import Navbar from "../components/Navbar";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
+        <link rel="icon" href="/icono.ico" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
           rel="stylesheet"
         />
       </Head>
-      <Component {...pageProps} />
+      <Navbar />
+      <main>
+        <Component {...pageProps} />
+      </main>
 
       <style jsx>{`
         :global(:root) {
@@ -30,11 +35,12 @@ function MyApp({ Component, pageProps }) {
 
         :global(html),
         :global(body) {
-          margin: 0;
+          color: rgb(var(--negro));
           font-family: -apple-system, "Poppins", BlinkMacSystemFont, Segoe UI,
             Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
             Helvetica Neue, sans-serif;
           font-size: 16px;
+          margin: 0;
           max-height: 100vh;
         }
 
@@ -47,7 +53,16 @@ function MyApp({ Component, pageProps }) {
         :global(a),
         :global(button),
         :global(input) {
+          color: inherit;
           font-family: inherit;
+        }
+
+        :global(.shadow) {
+          box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
+        }
+
+        main {
+          padding: 2em 1em;
         }
       `}</style>
     </>
