@@ -1,11 +1,15 @@
 import Head from "next/head";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <link rel="icon" href="/icono.ico" />
+        <meta charSet="UTF-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
@@ -16,6 +20,8 @@ function MyApp({ Component, pageProps }) {
       <main>
         <Component {...pageProps} />
       </main>
+
+      <Footer />
 
       <style jsx>{`
         :global(:root) {
@@ -59,6 +65,29 @@ function MyApp({ Component, pageProps }) {
 
         :global(.shadow) {
           box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
+        }
+        :global(.shadow-hover:hover) {
+          box-shadow: 0 7px 30px -2px rgba(150, 170, 180, 0.5);
+        }
+
+        :global(.scrollbar) {
+          scrollbar-width: thin;
+          scrollbar-color: rgb(var(--blanco)) rgba(var(--rojo), 0.5);
+        }
+        :global(.scrollbar::-webkit-scrollbar) {
+          -webkit-appearance: none;
+          background-color: rgb(var(--rojo));
+          position: absolute;
+          width: 8px;
+        }
+        :global(.scrollbar::-webkit-scrollbar-thumb) {
+          border-radius: 8px;
+          border: 1px solid rgb(var(--rojo));
+          background-color: rgb(var(--blanco));
+        }
+
+        :global(.scrollbar::-webkit-resizer) {
+          display: none;
         }
 
         main {
