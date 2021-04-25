@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { urlApi } from "../utils/urls";
 
 const useFechasSS = (todasLasFechas, ultimaFecha) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -8,7 +9,7 @@ const useFechasSS = (todasLasFechas, ultimaFecha) => {
 
   const obtenerDatosPorFecha = useCallback(() => {
     setIsLoading(true);
-    fetch(`http://localhost:3000/api/casos/sala-situacional/${fecha.fecha}`)
+    fetch(`${urlApi}/api/casos/sala-situacional/${fecha.fecha}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {

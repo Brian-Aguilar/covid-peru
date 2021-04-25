@@ -8,6 +8,7 @@ import SeleccionarFechas from "../components/Fechas";
 import SalaSituacionalTable from "../components/Table/sala_situacional";
 import { formatearNumeros } from "../utils/numeros";
 import Cargando from "../components/Cargando";
+import { urlApi } from "../utils/urls";
 
 const Mapa = dynamic(() => import("../components/Mapa"), { ssr: false });
 
@@ -149,9 +150,9 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(__) {
-  const { data } = await fetch(
-    "http://localhost:3000/api/fechas"
-  ).then((datos) => datos.json());
+  const { data } = await fetch(`${urlApi}/api/fechas`).then((datos) =>
+    datos.json()
+  );
   return {
     props: {
       fechas_totales: data,

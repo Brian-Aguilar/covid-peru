@@ -6,6 +6,7 @@ import Cargando from "../../components/Cargando";
 import FechasPorCasos from "../../components/Fechas/casos";
 import CasosTable from "../../components/Table/casos";
 import useFechaPorCaso from "../../hooks/fechasCasosHook";
+import { urlApi } from "../../utils/urls";
 
 const Mapa = dynamic(() => import("../../components/Mapa"), { ssr: false });
 
@@ -111,7 +112,7 @@ export async function getServerSideProps(context) {
   } = context;
 
   const { status, data: fechas } = await fetch(
-    "http://localhost:3000/api/fechas"
+    `${urlApi}/api/fechas`
   ).then((datos) => datos.json());
 
   if (status === 200) {
