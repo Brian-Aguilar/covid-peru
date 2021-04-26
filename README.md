@@ -2,10 +2,10 @@
 
 Aquí visualizaras los últimos datos reportados por la [Sala Situacional](https://covid19.minsa.gob.pe/sala_situacional.asp) y [Datos Abiertos](https://www.datosabiertos.gob.pe/search/field_topic/covid-19-917?sort_by=changed)
 
-🇵🇪 [Página para visualizar los datos](https://covid-peru.vercel.app/)\n
-🇵🇪 [Casos Positivos](https://covid-peru.vercel.app/casos/positivos)\n
-🇵🇪 [Casos Fallecidos](https://covid-peru.vercel.app/casos/vacunados)\n
-🇵🇪 [Casos Vacunados](https://covid-peru.vercel.app/casos/vacunados)\n
+🇵🇪 [Página para visualizar los datos](https://covid-peru.vercel.app/)
+🇵🇪 [Casos Positivos](https://covid-peru.vercel.app/casos/positivos)
+🇵🇪 [Casos Fallecidos](https://covid-peru.vercel.app/casos/vacunados)
+🇵🇪 [Casos Vacunados](https://covid-peru.vercel.app/casos/vacunados)
 
 ## Datos COVID-19 Perú 🇵🇪
 
