@@ -1,4 +1,4 @@
-import { obtenerCaso } from "../../../../utils/caso";
+import { obtenerUltimoDato } from "../../../../utils/caso";
 
 export default (req, res) => {
   const {
@@ -7,7 +7,7 @@ export default (req, res) => {
   } = req;
 
   if (method === "GET") {
-    obtenerCaso(caso, res, null, true);
+    obtenerUltimoDato(caso, res, null, true);
   } else {
     res.status(404).json({ status: 404, message: "ruta no econtrada" });
   }

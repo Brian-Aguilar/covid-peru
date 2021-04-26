@@ -4,18 +4,16 @@ const {
   obtenerNombreDelArchivoPorFecha,
 } = require("../database/utilidades/nombre");
 
-const { leerArchivo } = require("../database/utilidades/archivos");
-
-export const obtenerCaso = (caso, res, fecha, ultimaFecha) => {
+export const obtenerUltimoDato = (caso, res, fecha, ultimaFecha) => {
   switch (caso) {
     case "positivos":
-      return obtenerDatosDelCaso(CASO.positivo, fecha, res, ultimaFecha);
+      return obtenerDatosDelUltimoDato(CASO.positivo, fecha, res, ultimaFecha);
     case "fallecidos":
-      return obtenerDatosDelCaso(CASO.fallecido, fecha, res, ultimaFecha);
+      return obtenerDatosDelUltimoDato(CASO.fallecido, fecha, res, ultimaFecha);
     case "vacunados":
-      return obtenerDatosDelCaso(CASO.vacunado, fecha, res, ultimaFecha);
+      return obtenerDatosDelUltimoDato(CASO.vacunado, fecha, res, ultimaFecha);
     case "sala-situacional":
-      return obtenerDatosDelCaso(
+      return obtenerDatosDelUltimoDato(
         CASO.sala_situacional,
         fecha,
         res,
@@ -28,7 +26,24 @@ export const obtenerCaso = (caso, res, fecha, ultimaFecha) => {
   }
 };
 
-const obtenerDatosDelCaso = (caso, fecha, res, ultimaFecha) => {
+export const obtenerCasoPorFecha = (caso, fecha, res) => {
+  switch (caso) {
+    case "positivos":
+      return obtenerDatosDelCaso(CASO.positivo, fecha, res);
+    case "fallecidos":
+      return obtenerDatosDelCaso(CASO.fallecido, fecha, res);
+    case "vacunados":
+      return obtenerDatosDelCaso(CASO.vacunado, fecha, res);
+    case "sala-situacional":
+      return obtenerDatosDelCaso(CASO.sala_situacional, fecha, res);
+    default:
+      return res
+        .status(404)
+        .json({ status: 404, message: "ruta no econtrada" });
+  }
+};
+
+const obtenerDatosDelUltimoDato = (caso, fecha, res, ultimaFecha) => {
   let nombreDelArchivo = "";
   if (ultimaFecha) {
     nombreDelArchivo = obtenerNombreDelArchivoDeLaUltimaActualizacion(caso);
@@ -36,13 +51,25 @@ const obtenerDatosDelCaso = (caso, fecha, res, ultimaFecha) => {
     nombreDelArchivo = obtenerNombreDelArchivoPorFecha(fecha, caso);
   }
 
-  if (leerArchivo(nombreDelArchivo)) {
-    nombreDelArchivo = nombreDelArchivo.replace("./data/", "");
+  nombreDelArchivo = nombreDelArchivo.replace("./data/", "");
+  const obtenerDatosPorFecha = require(`../data/${nombreDelArchivo}`);
+
+  return res
+    .status(200)
+    .json({ status: 200, fecha, data: obtenerDatosPorFecha });
+};
+
+const obtenerDatosDelCaso = (caso, fecha, res) => {
+  const nombreDelArchivo = obtenerNombreDelArchivoPorFecha(fecha, caso).replace(
+    "./data/",
+    ""
+  );
+  try {
     const obtenerDatosPorFecha = require(`../data/${nombreDelArchivo}`);
     return res
       .status(200)
       .json({ status: 200, fecha, data: obtenerDatosPorFecha });
-  } else {
+  } catch (error) {
     return res.status(404).json({ status: 404, message: "fecha no valida" });
   }
 };
