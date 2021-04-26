@@ -1,15 +1,9 @@
-// import * as path from "path";
-// import { leerArchivo } from "../../database/utilidades/archivos";
-
-import data from "../../data/fechas.json";
-
-// const url = path.join(__dirname, "/data/fechas.json");
-// const url = "./data/fechas.json";
+import * as fs from "fs";
 
 export default async (req, res) => {
   const { method } = req;
 
-  // const data = await leerArchivo(url, true);
+  const data = JSON.parse(fs.readFileSync("./data/fechas.json").toString());
 
   if (method === "GET") {
     res.status(200).json({ status: 200, data: data });
