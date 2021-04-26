@@ -1,9 +1,10 @@
-import { leerArchivo, existeArchivo } from "../database/utilidades/archivos";
-import {
+const {
   CASO,
   obtenerNombreDelArchivoDeLaUltimaActualizacion,
   obtenerNombreDelArchivoPorFecha,
-} from "../database/utilidades/nombre";
+} = require("../database/utilidades/nombre");
+
+const { leerArchivo } = require("../database/utilidades/archivos");
 
 export const obtenerCaso = (caso, res, fecha, ultimaFecha) => {
   switch (caso) {
@@ -35,8 +36,9 @@ const obtenerDatosDelCaso = (caso, fecha, res, ultimaFecha) => {
     nombreDelArchivo = obtenerNombreDelArchivoPorFecha(fecha, caso);
   }
 
-  if (existeArchivo(nombreDelArchivo)) {
-    const obtenerDatosPorFecha = leerArchivo(nombreDelArchivo, true);
+  if (leerArchivo(nombreDelArchivo)) {
+    nombreDelArchivo = nombreDelArchivo.replace("./data/", "");
+    const obtenerDatosPorFecha = require(`../data/${nombreDelArchivo}`);
     return res
       .status(200)
       .json({ status: 200, fecha, data: obtenerDatosPorFecha });
