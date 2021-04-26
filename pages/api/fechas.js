@@ -2,12 +2,16 @@ import * as path from "path";
 
 import { leerArchivo } from "../../database/utilidades/archivos";
 
-const urlData = process.env.NODE_ENV
-  ? "./data/fechas.json"
-  : path.resolve(__dirname, "/data/fechas.json");
+const urlData =
+  process.env.NODE_ENV === "development"
+    ? "./data/fechas.json"
+    : path.join(__dirname, "/data/fechas.json");
 
 export default async (req, res) => {
   const { method } = req;
+
+  console.log(process.env.NODE_ENV);
+  console.log(urlData);
 
   const data = leerArchivo(urlData, true);
 
