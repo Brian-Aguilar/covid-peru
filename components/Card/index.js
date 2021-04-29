@@ -1,4 +1,6 @@
-export default function Card({ children }) {
+import { memo } from "react";
+
+function Card({ children }) {
   return (
     <>
       <div className="card shadow shadow-hover">
@@ -66,3 +68,5 @@ export default function Card({ children }) {
     </>
   );
 }
+
+export default memo(Card);

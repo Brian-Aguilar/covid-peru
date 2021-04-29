@@ -1,45 +1,60 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useContext } from "react";
+import { FechasContext } from "../../context/fechasContext";
+import useFechaPorCaso from "../../hooks/fechasCasosHook";
+import { urlApi } from "../../utils/urls";
+
 import ListasCard from "../../components/Card/listas";
 import Cargando from "../../components/Cargando";
 import FechasPorCasos from "../../components/Fechas/casos";
 import CasosTable from "../../components/Table/casos";
-import useFechaPorCaso from "../../hooks/fechasCasosHook";
-import { urlApi } from "../../utils/urls";
 
 const Mapa = dynamic(() => import("../../components/Mapa"), { ssr: false });
 
-const fechaInitial = {
-  id: 0,
-  fecha: "Ultima Actualización",
-  fecha_convertir: "Ultima Actualización",
-};
-
 export default function Casos(props) {
-  const { url, fechas_totales } = props;
-  const fechasTotales = [fechaInitial, ...fechas_totales];
-
+  const { url, metadatos } = props;
+  const { totalDeFechas } = useContext(FechasContext);
   const {
     fechas,
     fecha,
-    setFecha,
     selectValue,
     datoPorFecha,
     isLoading,
-  } = useFechaPorCaso(url, fechasTotales, fechaInitial);
-
-  useEffect(() => {
-    setFecha(fechaInitial);
-  }, [url]);
+  } = useFechaPorCaso(url, totalDeFechas);
 
   return (
     <>
       <Head>
-        <title>Casos {url}</title>
+        <title>COVID-19 Perú: Casos {url}</title>
+        <meta name="description" content={metadatos} />
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={`COVID-19 Perú: Casos ${url}`} />
+        <meta name="twitter:description" content={metadatos} />
+        <meta
+          name="twitter:image"
+          content="https://covid-peru.vercel.app/logo.png"
+        />
+
+        <meta name="og:title" content={`COVID-19 Perú: Casos ${url}`} />
+        <meta name="og:type" content="website" />
+        <meta property="og:url" content="https://covid-peru.vercel.app/" />
+        <meta
+          property="og:image"
+          content="https://covid-peru.vercel.app/logo.png"
+        />
+        <meta property="og:site_name" content={`COVID-19 Perú: Casos ${url}`} />
+
+        <meta itemProp="name" content={`COVID-19 Perú: Casos ${url}`} />
+        <meta itemProp="description" content={metadatos} />
+        <meta
+          itemProp="image"
+          content="https://covid-peru.vercel.app/logo.png"
+        />
       </Head>
 
-      {datoPorFecha && (
+      {datoPorFecha !== null && (
         <>
           <FechasPorCasos
             caso={url}
@@ -56,6 +71,7 @@ export default function Casos(props) {
               <Mapa data={datoPorFecha.departamentos} />
             </div>
           </div>
+
           <ListasCard titulo="Edades" datos={datoPorFecha.edades} />
           {url === "vacunados" && (
             <>
@@ -111,15 +127,15 @@ export async function getServerSideProps(context) {
     res,
   } = context;
 
-  const { status, data: fechas } = await fetch(
-    `${urlApi}/api/fechas`
+  const { status, data } = await fetch(
+    `${urlApi}/api/casos/${caso}/metadatos`
   ).then((datos) => datos.json());
 
   if (status === 200) {
     return {
       props: {
         url: caso,
-        fechas_totales: fechas,
+        metadatos: data,
       },
     };
   }

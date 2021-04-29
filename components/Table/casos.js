@@ -69,7 +69,6 @@ export default function CasosTable({ data }) {
     headerGroups,
     rows,
     prepareRow,
-    state: { expanded },
   } = useTable({ columns: columnas, data: datos }, useExpanded);
 
   return (

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { FechasProvider } from "../context/fechasContext";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -17,9 +18,11 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       <Navbar />
-      <main>
-        <Component {...pageProps} />
-      </main>
+      <FechasProvider>
+        <main>
+          <Component {...pageProps} />
+        </main>
+      </FechasProvider>
 
       <Footer />
 

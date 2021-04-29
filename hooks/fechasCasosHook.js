@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { urlApi } from "../utils/urls";
 
-const useFechaPorCaso = (
-  caso,
-  todasLasFechas,
-  fechaSelecionnada,
-  datoFecha
-) => {
+const fechaInitial = {
+  id: 0,
+  fecha: "Ultima Actualización",
+  fecha_convertir: "Ultima Actualización",
+};
+
+const useFechaPorCaso = (caso, totalDeFechas) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [fechas] = useState(todasLasFechas);
-  const [fecha, setFecha] = useState(fechaSelecionnada);
-  const [datoPorFecha, setDatoPorFecha] = useState(datoFecha);
+  const [fechas, setFechas] = useState(null);
+  const [fecha, setFecha] = useState(null);
+  const [datoPorFecha, setDatoPorFecha] = useState(null);
 
   const obtenerDatosPorFecha = useCallback(() => {
     setIsLoading(true);
@@ -45,13 +46,20 @@ const useFechaPorCaso = (
   };
 
   useEffect(() => {
-    obtenerDatosPorFecha();
+    if (totalDeFechas.length > 0) {
+      setFechas([fechaInitial, ...totalDeFechas]);
+      setFecha(fechaInitial);
+    }
+  }, [totalDeFechas]);
+  useEffect(() => {
+    if (fecha !== null) {
+      obtenerDatosPorFecha();
+    }
   }, [fecha, caso]);
 
   return {
     fechas,
     fecha,
-    setFecha,
     selectValue,
     datoPorFecha,
     isLoading,

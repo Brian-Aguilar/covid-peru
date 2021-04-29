@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 import Icons from "../Icons";
 
-export default function Navbar() {
+function Navbar() {
   const [navbar, setNavbar] = useState(false);
 
   const navbarChange = () => {
@@ -135,3 +135,5 @@ export default function Navbar() {
     </>
   );
 }
+
+export default memo(Navbar);

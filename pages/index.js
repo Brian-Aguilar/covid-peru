@@ -1,78 +1,110 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
+import { useContext } from "react";
 
+import { FechasContext } from "../context/fechasContext";
+import { urlApi } from "../utils/urls";
 import useFechasSS from "../hooks/fechasSalaSituacionalHook";
 
 import Card from "../components/Card";
 import SeleccionarFechas from "../components/Fechas";
 import SalaSituacionalTable from "../components/Table/sala_situacional";
-import { formatearNumeros } from "../utils/numeros";
 import Cargando from "../components/Cargando";
-import { urlApi } from "../utils/urls";
-
 const Mapa = dynamic(() => import("../components/Mapa"), { ssr: false });
+import { formatearNumeros } from "../utils/numeros";
 
 export default function Home(props) {
-  const { fechas_totales, ultima_fecha } = props;
-
+  const { metadatos } = props;
+  const { totalDeFechas } = useContext(FechasContext);
   const { fechas, fecha, selectValue, datoPorFecha, isLoading } = useFechasSS(
-    fechas_totales,
-    ultima_fecha
+    totalDeFechas
   );
 
   return (
     <>
       <Head>
-        <title>COVID-19: Perú</title>
+        <title>COVID-19 Perú</title>
+        <meta name="description" content={metadatos} />
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="COVID-19 Perú" />
+        <meta name="twitter:description" content={metadatos} />
+        <meta
+          name="twitter:image"
+          content="https://covid-peru.vercel.app/logo.png"
+        />
+
+        <meta name="og:title" content="COVID-19 Perú" />
+        <meta name="og:type" content="website" />
+        <meta property="og:url" content="https://covid-peru.vercel.app/" />
+        <meta
+          property="og:image"
+          content="https://covid-peru.vercel.app/logo.png"
+        />
+        <meta property="og:site_name" content="COVID-19 Perú" />
+
+        <meta itemProp="name" content="COVID-19 Perú" />
+        <meta itemProp="description" content={metadatos} />
+        <meta
+          itemProp="image"
+          content="https://covid-peru.vercel.app/logo.png"
+        />
       </Head>
 
-      <div className="contenido">
-        <div className="contenido-i">
-          <Card>
-            <h3 className="titulo">Positivos</h3>
-            <h2 className="sub-titulo">
-              {formatearNumeros(datoPorFecha?.positivos)}
-            </h2>
-          </Card>
-          <Card>
-            <h3 className="titulo">Fallecidos</h3>
-            <h2 className="sub-titulo">
-              {formatearNumeros(datoPorFecha?.fallecidos)}
-            </h2>
-          </Card>
-        </div>
-        <div className="contenido-d">
-          <SeleccionarFechas
-            fechas={fechas}
-            fecha={fecha}
-            selectValue={selectValue}
-          />
-        </div>
-      </div>
-      <div className="contenido-2">
-        <Card>
-          <h3 className="titulo">Pruebas Antígenas:</h3>
-          <h2 className="sub-titulo">{formatearNumeros(datoPorFecha?.pa)}</h2>
-        </Card>
-        <Card>
-          <h3 className="titulo">Pruebas Moleculares:</h3>
-          <h2 className="sub-titulo">{formatearNumeros(datoPorFecha?.pcr)}</h2>
-        </Card>
-        <Card>
-          <h3 className="titulo">Pruebas Rapidas:</h3>
-          <h2 className="sub-titulo">{formatearNumeros(datoPorFecha?.pr)}</h2>
-        </Card>
-      </div>
-
-      {datoPorFecha.datos && (
-        <div className="mapa-tabla">
-          <div className="tabla">
-            <SalaSituacionalTable data={datoPorFecha.datos} />
+      {datoPorFecha !== null && (
+        <>
+          <div className="contenido">
+            <div className="contenido-i">
+              <Card>
+                <h3 className="titulo">Positivos</h3>
+                <h2 className="sub-titulo">
+                  {formatearNumeros(datoPorFecha?.positivos)}
+                </h2>
+              </Card>
+              <Card>
+                <h3 className="titulo">Fallecidos</h3>
+                <h2 className="sub-titulo">
+                  {formatearNumeros(datoPorFecha?.fallecidos)}
+                </h2>
+              </Card>
+            </div>
+            <div className="contenido-d">
+              <SeleccionarFechas
+                fechas={fechas}
+                fecha={fecha}
+                selectValue={selectValue}
+              />
+            </div>
           </div>
-          <div className="mapa">
-            <Mapa data={datoPorFecha.datos} sala={true} />
+          <div className="contenido-2">
+            <Card>
+              <h3 className="titulo">Pruebas Antígenas:</h3>
+              <h2 className="sub-titulo">
+                {formatearNumeros(datoPorFecha.pa)}
+              </h2>
+            </Card>
+            <Card>
+              <h3 className="titulo">Pruebas Moleculares:</h3>
+              <h2 className="sub-titulo">
+                {formatearNumeros(datoPorFecha.pcr)}
+              </h2>
+            </Card>
+            <Card>
+              <h3 className="titulo">Pruebas Rapidas:</h3>
+              <h2 className="sub-titulo">
+                {formatearNumeros(datoPorFecha.pr)}
+              </h2>
+            </Card>
           </div>
-        </div>
+          <div className="mapa-tabla">
+            <div className="tabla">
+              <SalaSituacionalTable data={datoPorFecha.datos} />
+            </div>
+            <div className="mapa">
+              <Mapa data={datoPorFecha.datos} sala={true} />
+            </div>
+          </div>
+        </>
       )}
 
       <Cargando isActive={isLoading} />
@@ -150,13 +182,12 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(__) {
-  const { data } = await fetch(`${urlApi}/api/fechas`).then((datos) =>
-    datos.json()
-  );
+  const { data } = await fetch(
+    `${urlApi}/api/casos/sala-situacional/metadatos`
+  ).then((datos) => datos.json());
   return {
     props: {
-      fechas_totales: data,
-      ultima_fecha: data[0],
+      metadatos: data,
     },
   };
 }

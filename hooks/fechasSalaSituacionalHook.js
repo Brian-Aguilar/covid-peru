@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { urlApi } from "../utils/urls";
 
-const useFechasSS = (todasLasFechas, ultimaFecha) => {
+const useFechasSS = (todasLasFechas) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [fechas] = useState(todasLasFechas);
-  const [fecha, setFecha] = useState(ultimaFecha);
-  const [datoPorFecha, setDatoPorFecha] = useState([]);
+  const [fechas, setFechas] = useState(null);
+  const [fecha, setFecha] = useState(null);
+  const [datoPorFecha, setDatoPorFecha] = useState(null);
 
   const obtenerDatosPorFecha = useCallback(() => {
     setIsLoading(true);
@@ -20,14 +20,19 @@ const useFechasSS = (todasLasFechas, ultimaFecha) => {
         setIsLoading(false);
       });
   }, [fecha]);
-
   const selectValue = (e) => {
     const obtenerFecha = fechas.filter((f) => f.fecha === e.target.value)[0];
     setFecha(obtenerFecha);
   };
 
   useEffect(() => {
-    if (fecha.id !== "") {
+    if (todasLasFechas.length !== 0) {
+      setFechas(todasLasFechas);
+      setFecha(todasLasFechas[0]);
+    }
+  }, [todasLasFechas]);
+  useEffect(() => {
+    if (fecha !== null) {
       obtenerDatosPorFecha();
     }
   }, [fecha]);

@@ -73,3 +73,61 @@ const obtenerDatosDelCaso = (caso, fecha, res) => {
     return res.status(404).json({ status: 404, message: "fecha no valida" });
   }
 };
+
+export const obtenerUltimoDatoPorCaso = (caso) => {
+  let nombreDelArchivo = "";
+  switch (caso) {
+    case "positivos":
+      nombreDelArchivo = obtenerNombreDelArchivoDeLaUltimaActualizacion(
+        CASO.positivo
+      );
+      nombreDelArchivo = nombreDelArchivo.replace("./data/", "");
+      return require(`../data/${nombreDelArchivo}`);
+    case "fallecidos":
+      nombreDelArchivo = obtenerNombreDelArchivoDeLaUltimaActualizacion(
+        CASO.fallecido
+      );
+      nombreDelArchivo = nombreDelArchivo.replace("./data/", "");
+      return require(`../data/${nombreDelArchivo}`);
+    case "vacunados":
+      nombreDelArchivo = obtenerNombreDelArchivoDeLaUltimaActualizacion(
+        CASO.vacunado
+      );
+      nombreDelArchivo = nombreDelArchivo.replace("./data/", "");
+      return require(`../data/${nombreDelArchivo}`);
+    case "sala-situacional":
+      return obtenerDatoDeFecha();
+    default:
+      return "error";
+  }
+};
+
+const obtenerDatoDeFecha = () => {
+  const fechaActual = new Date();
+  let dia = fechaActual.getDate() - 1;
+  let mes = fechaActual.getMonth() + 1;
+  const año = fechaActual.getFullYear();
+
+  let fechaCompleta = `${String(dia).padStart(2, 0)}${String(mes).padStart(
+    2,
+    0
+  )}${año}`;
+  let fechaCompletaSlash = `${String(dia).padStart(2, 0)}/${String(
+    mes
+  ).padStart(2, 0)}/${año}`;
+  let dato = "";
+  try {
+    dato = require(`../data/sala_situacional/${fechaCompleta}.json`);
+  } catch (error) {
+    fechaCompleta = `${String(dia - 1).padStart(2, 0)}${String(mes).padStart(
+      2,
+      0
+    )}${año}`;
+    fechaCompletaSlash = `${String(dia - 1).padStart(2, 0)}/${String(
+      mes
+    ).padStart(2, 0)}/${año}`;
+    dato = require(`../data/sala_situacional/${fechaCompleta}.json`);
+  }
+
+  return { fecha: fechaCompletaSlash, data: dato };
+};

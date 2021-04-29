@@ -1,7 +1,8 @@
+import { memo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Icons from "../Icons";
 
-export default function Table({ columns, data = [] }) {
+function Table({ columns, data = [] }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -158,3 +159,5 @@ export default function Table({ columns, data = [] }) {
     </>
   );
 }
+
+export default memo(Table);

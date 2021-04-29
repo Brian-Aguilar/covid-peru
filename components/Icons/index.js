@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Cerrar from "./cerrar";
 import Data from "./data";
 import { FDown, FRight, FUp } from "./flechas";
@@ -5,7 +6,7 @@ import Github from "./github";
 import Menu from "./menu";
 import Peru from "./peru";
 
-export default function Icons(props) {
+function Icons(props) {
   switch (props.tipo) {
     case "menu":
       return <Menu {...props} />;
@@ -27,3 +28,5 @@ export default function Icons(props) {
       return "hola";
   }
 }
+
+export default memo(Icons);

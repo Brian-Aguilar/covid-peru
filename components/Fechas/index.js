@@ -1,4 +1,6 @@
-export default function SeleccionarFechas({ fechas, fecha, selectValue }) {
+import { memo } from "react";
+
+function SeleccionarFechas({ fechas, fecha, selectValue }) {
   return (
     <>
       <div className="__SF-fechas-contenido">
@@ -38,3 +40,5 @@ export default function SeleccionarFechas({ fechas, fecha, selectValue }) {
     </>
   );
 }
+
+export default memo(SeleccionarFechas);
