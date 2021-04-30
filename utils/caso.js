@@ -103,31 +103,9 @@ export const obtenerUltimoDatoPorCaso = (caso) => {
 };
 
 const obtenerDatoDeFecha = () => {
-  const fechaActual = new Date();
-  let dia = fechaActual.getDate() - 1;
-  let mes = fechaActual.getMonth() + 1;
-  const año = fechaActual.getFullYear();
+  const totalDeFechas = require("../data/fechas.json");
+  const ultimaFecha = totalDeFechas[0];
+  const data = require(`../data/sala_situacional/${ultimaFecha.fecha}.json`);
 
-  let fechaCompleta = `${String(dia).padStart(2, 0)}${String(mes).padStart(
-    2,
-    0
-  )}${año}`;
-  let fechaCompletaSlash = `${String(dia).padStart(2, 0)}/${String(
-    mes
-  ).padStart(2, 0)}/${año}`;
-  let dato = "";
-  try {
-    dato = require(`../data/sala_situacional/${fechaCompleta}.json`);
-  } catch (error) {
-    fechaCompleta = `${String(dia - 1).padStart(2, 0)}${String(mes).padStart(
-      2,
-      0
-    )}${año}`;
-    fechaCompletaSlash = `${String(dia - 1).padStart(2, 0)}/${String(
-      mes
-    ).padStart(2, 0)}/${año}`;
-    dato = require(`../data/sala_situacional/${fechaCompleta}.json`);
-  }
-
-  return { fecha: fechaCompletaSlash, data: dato };
+  return { fecha: ultimaFecha.fecha_convertir, data };
 };
