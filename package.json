@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "actualizar": "node database/index.js"
+    "actualizar": "node --max-old-space-size=8192 database/index.js"
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.18",
