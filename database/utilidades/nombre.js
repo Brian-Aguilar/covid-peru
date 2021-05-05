@@ -17,7 +17,7 @@ const obtenerURLDelCaso = (caso) => {
     case CASO.positivo:
       return "https://www.datosabiertos.gob.pe/api/3/action/package_show?id=3423d336-63b5-4a73-af54-7f9836a9bb26";
     case CASO.vacunado:
-      return "https://www.datosabiertos.gob.pe/api/3/action/package_show?id=e0ee7bf1-27c3-4520-9836-579b931c1b8b";
+      return "https://www.datosabiertos.gob.pe/api/3/action/package_show?id=24af4ff4-226d-4e3d-90cb-d26a1849796e";
     default:
       return CASO.error;
   }
