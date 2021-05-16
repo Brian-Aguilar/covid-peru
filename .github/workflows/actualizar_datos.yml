@@ -2,9 +2,9 @@ name: actualizar_datos
 
 on:
   workflow_dispatch:
-  schedule:
+  # schedule:
     # Se ejecutrar todos los dias a las 6:00 PM hora peruana
-    - cron: 00 23 * * *
+    # - cron: 00 23 * * *
 
 jobs:
   build:
