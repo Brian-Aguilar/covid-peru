@@ -73,11 +73,12 @@ const crearUltimosDatos = async (
     if (extra !== false) {
       datosPorCasos = { ...datosPorCasos, ...extra(datos) };
     }
-
     crearArchivo(nombreDelArchivo, datosPorCasos, true);
     mensaje(
       obtenerTituloDelCaso(caso),
-      `${convertirFechaEUaES(ultima_fecha, "/")} se a creado.`
+      `${
+        ss === false ? "Ultimos casos" : convertirFechaEUaES(ultima_fecha, "/")
+      } se a creado.`
     );
   } else {
     if (ss === false) {
@@ -120,12 +121,8 @@ const obtenerDatosPorDepartamentos = (datos) => {
     const totalPorDepartamento = departamentosFiltrados.filter(
       (d) => d === depa
     ).length;
-    const {
-      id,
-      longitud,
-      latitud,
-      nombre_original,
-    } = totalDeDepartamentos.filter((d) => d.nombre === depa)[0];
+    const { id, longitud, latitud, nombre_original } =
+      totalDeDepartamentos.filter((d) => d.nombre === depa)[0];
     totalDeDatos.push({
       id,
       nombre: `${depa}`,
@@ -152,8 +149,9 @@ const obtenerDatosPorProvincias = (datos, departamento) => {
   const provincias = [...new Set(datosDeDepartamentosConSusProvincias)];
   let datoTotal = [];
   provincias.forEach((p) => {
-    const total = datosDeDepartamentosConSusProvincias.filter((d) => d === p)
-      .length;
+    const total = datosDeDepartamentosConSusProvincias.filter(
+      (d) => d === p
+    ).length;
     datoTotal.push({
       nombre: p,
       casos: total,

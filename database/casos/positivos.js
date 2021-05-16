@@ -9,8 +9,7 @@ const { convertirFechaEUaES } = require("../utilidades/fechas");
 const { filtrarDatosEspecificos } = require("../utilidades/filtros");
 
 const crearCasosPositivos = async () => {
-  const casoPositivo = CASO.positivo;
-  await crearCaso(casoPositivo, filtrarCasosPositivos, datosExtras);
+  await crearCaso(CASO.positivo, filtrarCasosPositivos, datosExtras);
 };
 
 const filtrarCasosPositivos = (datos) =>
@@ -32,7 +31,6 @@ const datosExtras = (datos) => {
 };
 
 const metodoCP = (metododx) => {
-  const total = metododx.length;
   const datosDelMetododx = [...new Set(metododx)];
   let datos = [];
   datosDelMetododx.forEach((metodo) => {
@@ -40,12 +38,24 @@ const metodoCP = (metododx) => {
     datos.push({
       nombre: `${metodo}`,
       casos: totalPorMetododx,
-      porcentaje: porcentaje(totalPorMetododx, total),
+      porcentaje: porcentaje(totalPorMetododx, metododx.length),
     });
   });
 
   return datos;
 };
+
+/** Datos del archivo CSV
+ * 0 => Fecha_corte
+ * 1 => UUID
+ * 2 => Departamento
+ * 3 => Provincia
+ * 4 => Distrito
+ * 5 => Metododx
+ * 6 => Edad
+ * 7 => Sexo
+ * 8 => Fecha_resultado
+ */
 
 module.exports = {
   crearCasosPositivos,

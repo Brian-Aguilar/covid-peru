@@ -8,8 +8,7 @@ const { CASO } = require("../utilidades/nombre");
 const { crearCaso } = require("./base");
 
 const crearCasosVacunados = async () => {
-  const casosVacunados = CASO.vacunado;
-  await crearCaso(casosVacunados, filtrarCasosVacunados, datosExtras);
+  await crearCaso(CASO.vacunado, filtrarCasosVacunados, datosExtras);
 };
 
 const filtrarCasosVacunados = (datos) =>
@@ -90,6 +89,21 @@ const nombreDeDosis = (numero) => {
       return "";
   }
 };
+
+/** Datos del archivo CSV
+ * 0 => Fecha_corte
+ * 1 => UUID
+ * 2 => Grupo_riesgo
+ * 3 => Edad
+ * 4 => Sexo
+ * 5 => Fecha_vacunacion
+ * 6 => Dosis
+ * 7 => Fabricante
+ * 8 => Diresa
+ * 9 => Departamento
+ * 10 => Provincia
+ * 11 => Distrito
+ */
 
 module.exports = {
   crearCasosVacunados,
