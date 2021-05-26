@@ -17,9 +17,7 @@ const descargarArchivo = async (caso) => {
     const { status, url } = await obtenerUrlDelCaso(caso);
     if (status === 200) {
       mensaje(nombreDelCaso, "descargando...");
-
       crearArchivo(nombreDelArchivo, (await download(url)).toString());
-
       mensaje(nombreDelCaso, "se descargo correctamente");
     } else {
       mensaje(nombreDelCaso, "no se encuentra en los servidores");
@@ -42,15 +40,22 @@ const configuracionCSV = (caso) => {
     download: false,
     delimiter: caso === "vacunado" ? "," : ";",
   };
-  const { data: datos } = CSV.parse(
-    obtenerArchivoDescargado(caso),
-    configuracion
-  );
+  try {
+    const { data: datos } = CSV.parse(
+      obtenerArchivoDescargado(caso),
+      configuracion
+    );
 
-  return {
-    ultima_fecha: parseInt(datos[1][0]),
-    datos: datos.filter((d) => d[1] !== undefined).slice(1),
-  };
+    return {
+      ultima_fecha: parseInt(datos[1][0]),
+      datos: datos.filter((d) => d[1] !== undefined).slice(1),
+      ok: true,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+    };
+  }
 };
 
 module.exports = {

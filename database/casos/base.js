@@ -10,11 +10,13 @@ const { obtenerFechas } = require("./sala_situacional");
 const { crearUltimosDatos } = require("./ultimos");
 
 const crearCaso = async (nombreDelCaso, filtrarDatos, extra = false) => {
-  const { ultima_fecha, datos } = await descargarArchivo(nombreDelCaso);
-  const datosFiltrados = filtrarDatos(datos);
-  await crearCasosPorFechaSituacional(nombreDelCaso, datosFiltrados, extra);
-  await crearUltimosDatos(nombreDelCaso, datosFiltrados, ultima_fecha, extra);
-  await eliminarCasoDescargado(nombreDelCaso);
+  const { ultima_fecha, datos, ok } = await descargarArchivo(nombreDelCaso);
+  if (ok === true) {
+    const datosFiltrados = filtrarDatos(datos);
+    await crearCasosPorFechaSituacional(nombreDelCaso, datosFiltrados, extra);
+    await crearUltimosDatos(nombreDelCaso, datosFiltrados, ultima_fecha, extra);
+    await eliminarCasoDescargado(nombreDelCaso);
+  }
 };
 
 const crearCasosPorFechaSituacional = async (caso, datos, extra) => {
