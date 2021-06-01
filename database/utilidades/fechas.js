@@ -65,6 +65,19 @@ const aumentarFecha = (fecha, aumentar = 0) => {
   return `${año}${mes}${formatearDiaOMes(parseInt(dia) + aumentar)}`;
 };
 
+const disminuirFecha = (fecha, disminuir = 0) => {
+  let { dia, mes, año } = fechaEU(fecha);
+
+  if (parseInt(dia) - disminuir === 0) {
+    const datosDeLaFecha = new Date(año, mes - 1, 0);
+    dia = datosDeLaFecha.getDate();
+    mes = datosDeLaFecha.getMonth() + 1;
+  } else {
+    dia = parseInt(dia) - disminuir;
+  }
+  return fechaEsCompleta(dia, mes, año);
+};
+
 module.exports = {
   aumentarFecha,
   convertirFechaES,
@@ -76,4 +89,5 @@ module.exports = {
   fechaEU,
   fechaEUCompleta,
   formatearDiaOMes,
+  disminuirFecha,
 };

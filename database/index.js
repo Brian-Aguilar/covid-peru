@@ -2,16 +2,16 @@ const { crearCasosFallecidos } = require("./casos/fallecidos");
 const { crearCasosPositivos } = require("./casos/positivos");
 const { crearSalaSituacional } = require("./casos/sala_situacional");
 const { crearCasosVacunados } = require("./casos/vacunados");
-const { fechaEsCompleta } = require("./utilidades/fechas");
+const { disminuirFecha, fechaEUCompleta } = require("./utilidades/fechas");
 
 (async () => {
   const fecha = new Date();
-  const fechaCompleta = fechaEsCompleta(
-    fecha.getDate() - 1,
+  const fechaCompleta = fechaEUCompleta(
+    fecha.getFullYear(),
     fecha.getMonth() + 1,
-    fecha.getFullYear()
+    fecha.getDate()
   );
-  await crearSalaSituacional(fechaCompleta);
+  await crearSalaSituacional(disminuirFecha(fechaCompleta, 1));
   // crear casos
   await crearCasosPositivos();
   await crearCasosFallecidos();
