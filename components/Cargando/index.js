@@ -1,16 +1,18 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { CargarDatosContext } from "../../context/cargarDatosContext";
 
-export default function Cargando({ isActive }) {
+export default function Cargando() {
+  const { cargandoDatos } = useContext(CargarDatosContext);
   useEffect(() => {
-    if (isActive) {
+    if (cargandoDatos) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "visible";
     }
-  }, [isActive]);
+  }, [cargandoDatos]);
   return (
     <>
-      <div className={`cargando ${isActive ? "open" : "close"}`}>
+      <div className={`cargando ${cargandoDatos ? "open" : "close"}`}>
         <img src="/logo.png" alt="Logo" />
         <h1>Cargando datos ...</h1>
       </div>

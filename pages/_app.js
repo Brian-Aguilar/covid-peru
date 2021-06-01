@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { CargarDatosProvider } from "../context/cargarDatosContext";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { FechasProvider } from "../context/fechasContext";
@@ -6,25 +7,30 @@ import { FechasProvider } from "../context/fechasContext";
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Head>
-        <meta charSet="UTF-8" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-      <Navbar />
-      <FechasProvider>
-        <main>
-          <Component {...pageProps} />
-        </main>
-      </FechasProvider>
+      <CargarDatosProvider>
+        <Head>
+          <meta charSet="UTF-8" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <link rel="icon" href="/favicon.ico" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
+            rel="stylesheet"
+          />
+        </Head>
+        <Navbar />
+        <FechasProvider>
+          <main>
+            <Component {...pageProps} />
+          </main>
+        </FechasProvider>
 
-      <Footer />
+        <Footer />
+      </CargarDatosProvider>
 
       <style jsx>{`
         :global(:root) {

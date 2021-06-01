@@ -1,30 +1,39 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { FechasContext } from "../context/fechasContext";
+import { CargarDatosContext } from "../context/cargarDatosContext";
 import { urlApi } from "../utils/urls";
 import useFechasSS from "../hooks/fechasSalaSituacionalHook";
 
 import Card from "../components/Card";
 import SeleccionarFechas from "../components/Fechas";
 import SalaSituacionalTable from "../components/Table/sala_situacional";
-import Cargando from "../components/Cargando";
 const Mapa = dynamic(() => import("../components/Mapa"), { ssr: false });
 import { formatearNumeros } from "../utils/numeros";
 
 export default function Home(props) {
   const { metadatos } = props;
   const { totalDeFechas } = useContext(FechasContext);
-  const { fechas, fecha, selectValue, datoPorFecha, isLoading } = useFechasSS(
-    totalDeFechas
-  );
+  const { setCargandoDatos } = useContext(CargarDatosContext);
+  const { fechas, fecha, selectValue, datoPorFecha, isLoading } =
+    useFechasSS(totalDeFechas);
+
+  useEffect(() => {
+    setCargandoDatos(isLoading);
+  }, [isLoading]);
 
   return (
     <>
       <Head>
         <title>COVID-19 Perú</title>
         <meta name="description" content={metadatos} />
+        <meta
+          name="keywords"
+          content="covid peru, covid19 peru, covid-19 peru, covid19 peru hoy, covid-19 peru hoy"
+        />
+        <meta name="robots" content="index, follow" />
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="COVID-19 Perú" />
@@ -106,8 +115,6 @@ export default function Home(props) {
           </div>
         </>
       )}
-
-      <Cargando isActive={isLoading} />
 
       <style jsx>{`
         .contenido {

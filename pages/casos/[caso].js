@@ -1,33 +1,38 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FechasContext } from "../../context/fechasContext";
 import useFechaPorCaso from "../../hooks/fechasCasosHook";
 import { urlApi } from "../../utils/urls";
 
 import ListasCard from "../../components/Card/listas";
-import Cargando from "../../components/Cargando";
 import FechasPorCasos from "../../components/Fechas/casos";
 import CasosTable from "../../components/Table/casos";
+import { CargarDatosContext } from "../../context/cargarDatosContext";
 
 const Mapa = dynamic(() => import("../../components/Mapa"), { ssr: false });
 
 export default function Casos(props) {
   const { url, metadatos } = props;
   const { totalDeFechas } = useContext(FechasContext);
-  const {
-    fechas,
-    fecha,
-    selectValue,
-    datoPorFecha,
-    isLoading,
-  } = useFechaPorCaso(url, totalDeFechas);
+  const { setCargandoDatos } = useContext(CargarDatosContext);
+  const { fechas, fecha, selectValue, datoPorFecha, isLoading } =
+    useFechaPorCaso(url, totalDeFechas);
+
+  useEffect(() => {
+    setCargandoDatos(isLoading);
+  }, [isLoading]);
 
   return (
     <>
       <Head>
         <title>COVID-19 Perú: Casos {url}</title>
         <meta name="description" content={metadatos} />
+        <meta
+          name="keywords"
+          content={`covid peru ${url}, covid19 peru ${url}, covid-19 peru ${url}`}
+        />
+        <meta name="robots" content="index, follow" />
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={`COVID-19 Perú: Casos ${url}`} />
@@ -92,8 +97,6 @@ export default function Casos(props) {
           )}
         </>
       )}
-
-      <Cargando isActive={isLoading} />
 
       <style jsx>{`
         .mapa-tabla {

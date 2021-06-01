@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { urlApi } from "../utils/urls";
 
 const useFechasSS = (todasLasFechas) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [fechas, setFechas] = useState(null);
   const [fecha, setFecha] = useState(null);
   const [datoPorFecha, setDatoPorFecha] = useState(null);
