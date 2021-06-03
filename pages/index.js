@@ -142,13 +142,18 @@ export default function Home(props) {
         }
 
         .mapa-tabla {
-          display: flex;
           width: 100%;
-          flex-direction: column;
           margin-top: 2em;
+          display: grid;
         }
         .tabla {
-          flex: 1 1 auto;
+          grid-column: auto;
+          overflow-x: hidden;
+        }
+        .mapa {
+          width: 100%;
+          align-items: center;
+          grid-column: auto;
         }
 
         @media (min-width: 1400px) {
@@ -160,27 +165,26 @@ export default function Home(props) {
             flex-direction: row;
             justify-content: space-around;
           }
-          .mapa-tabla {
-            flex-direction: row;
-          }
         }
         @media (min-width: 992px) {
           .contenido-2 {
             margin-top: 1.75em;
+          }
+          .mapa-tabla {
+            grid-template-columns: repeat(3, 1fr);
+          }
+          .tabla {
+            grid-column: 1/3;
+          }
+          .mapa {
+            grid-column: 3/4;
+            min-height: 500px;
           }
         }
 
         @media (min-width: 768px) {
           .contenido {
             flex-direction: row;
-          }
-
-          .tabla {
-            flex: 1 1 auto;
-          }
-          .mapa {
-            flex: 1 1 auto;
-            min-height: 500px;
           }
         }
       `}</style>
