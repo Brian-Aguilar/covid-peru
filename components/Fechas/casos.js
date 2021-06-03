@@ -32,6 +32,7 @@ export default function FechasPorCasos({
             fechas={fechas_totales}
             fecha={fecha_seleccionada}
             selectValue={selectValue}
+            caso={caso}
           />
         </span>
       </div>

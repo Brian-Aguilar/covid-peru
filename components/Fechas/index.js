@@ -1,6 +1,16 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
+import { convertirFechaESaEU } from "../../utils/fecha";
 
-function SeleccionarFechas({ fechas, fecha, selectValue }) {
+function SeleccionarFechas({ fechas, fecha, selectValue, caso }) {
+  useEffect(() => {
+    if (caso !== undefined) {
+      selectValue({
+        target: {
+          value: "Ultima Actualización",
+        },
+      });
+    }
+  }, [caso]);
   return (
     <>
       <div className="__SF-fechas-contenido">
@@ -9,11 +19,27 @@ function SeleccionarFechas({ fechas, fecha, selectValue }) {
           {fechas.length === 0 ? (
             <option value="cargando...">cargando...</option>
           ) : (
-            fechas.map((fecha) => (
-              <option key={fecha.id} value={fecha.fecha}>
-                {fecha.fecha_convertir}
-              </option>
-            ))
+            fechas
+              .filter((f) => {
+                if (
+                  caso === "vacunados" &&
+                  (parseInt(convertirFechaESaEU(f.fecha, "")) >= 20210209 ||
+                    f.fecha === "Ultima Actualización")
+                ) {
+                  return f;
+                } else if (
+                  caso === "fallecidos" ||
+                  caso === "positivos" ||
+                  caso === undefined
+                ) {
+                  return f;
+                }
+              })
+              .map((fecha) => (
+                <option key={fecha.id} value={fecha.fecha}>
+                  {fecha.fecha_convertir}
+                </option>
+              ))
           )}
         </select>
       </div>

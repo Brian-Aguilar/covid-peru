@@ -122,7 +122,9 @@ const obtenerDatosPorDepartamentos = (datos) => {
       (d) => d === depa
     ).length;
     const { id, longitud, latitud, nombre_original } =
-      totalDeDepartamentos.filter((d) => d.nombre === depa)[0];
+      totalDeDepartamentos.filter(
+        (d) => d.nombre === (depa === "lima metropolitana" ? "lima" : depa)
+      )[0];
     totalDeDatos.push({
       id,
       nombre: `${depa}`,
