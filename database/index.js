@@ -1,4 +1,4 @@
-"use-strict";
+"use strict";
 
 const { crearCasosFallecidos } = require("./casos/fallecidos");
 const { crearCasosPositivos } = require("./casos/positivos");
