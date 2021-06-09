@@ -17,22 +17,27 @@ const descargarArchivo = async (caso) => {
     const { status, url } = await obtenerUrlDelCaso(caso);
     if (status === 200) {
       mensaje(nombreDelCaso, "descargando...");
-      crearArchivo(nombreDelArchivo, (await download(url)).toString());
-      mensaje(nombreDelCaso, "se descargo correctamente");
+      try {
+        crearArchivo(nombreDelArchivo, (await download(url)).toString());
+        mensaje(nombreDelCaso, "se descargo correctamente");
+      } catch (error) {
+        mensaje(nombreDelCaso, "error al descargar el archivo");
+      }
     } else {
       mensaje(nombreDelCaso, "no se encuentra en los servidores");
     }
   } else {
     mensaje(nombreDelCaso, "el archivo ya existe");
   }
-  return configuracionCSV(caso);
+  console.log("aaa");
+  return await configuracionCSV(caso);
 };
 
 const obtenerArchivoDescargado = (caso) => {
   return leerArchivo(obtenerNombreDelArchivoDelCasoCSV(caso));
 };
 
-const configuracionCSV = (caso) => {
+const configuracionCSV = async (caso) => {
   const configuracion = {
     header: false,
     preview: 0,
@@ -42,7 +47,7 @@ const configuracionCSV = (caso) => {
   };
   try {
     const { data: datos } = CSV.parse(
-      obtenerArchivoDescargado(caso),
+      await obtenerArchivoDescargado(caso),
       configuracion
     );
 
@@ -52,6 +57,7 @@ const configuracionCSV = (caso) => {
       ok: true,
     };
   } catch (error) {
+    console.log("Error el archivo es muy pesado.");
     return {
       ok: false,
     };

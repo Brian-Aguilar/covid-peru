@@ -1,3 +1,5 @@
+"use-strict";
+
 const { crearCasosFallecidos } = require("./casos/fallecidos");
 const { crearCasosPositivos } = require("./casos/positivos");
 const { crearSalaSituacional } = require("./casos/sala_situacional");
