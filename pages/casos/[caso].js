@@ -9,8 +9,12 @@ import ListasCard from "../../components/Card/listas";
 import FechasPorCasos from "../../components/Fechas/casos";
 import CasosTable from "../../components/Table/casos";
 import { CargarDatosContext } from "../../context/cargarDatosContext";
+import Mensaje from "../../components/Mensaje";
 
 const Mapa = dynamic(() => import("../../components/Mapa"), { ssr: false });
+
+const mensajeVacuna =
+  "Por el momento funciona hasta la fecha 2 de Junio del 2021.";
 
 export default function Casos(props) {
   const { url, metadatos } = props;
@@ -61,6 +65,10 @@ export default function Casos(props) {
 
       {datoPorFecha !== null && (
         <>
+          {url === "vacunados" && (
+            <Mensaje texto={mensajeVacuna} color="celeste" />
+          )}
+
           <FechasPorCasos
             caso={url}
             fechas_totales={fechas}

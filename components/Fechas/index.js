@@ -23,7 +23,8 @@ function SeleccionarFechas({ fechas, fecha, selectValue, caso }) {
               .filter((f) => {
                 if (
                   caso === "vacunados" &&
-                  (parseInt(convertirFechaESaEU(f.fecha, "")) >= 20210209 ||
+                  ((parseInt(convertirFechaESaEU(f.fecha, "")) >= 20210209 &&
+                    parseInt(convertirFechaESaEU(f.fecha, "")) <= 20210602) ||
                     f.fecha === "Ultima Actualización")
                 ) {
                   return f;

@@ -29,7 +29,6 @@ const descargarArchivo = async (caso) => {
   } else {
     mensaje(nombreDelCaso, "el archivo ya existe");
   }
-  console.log("aaa");
   return await configuracionCSV(caso);
 };
 
