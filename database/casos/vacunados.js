@@ -13,16 +13,16 @@ const crearCasosVacunados = async () => {
 
 const filtrarCasosVacunados = (datos) =>
   datos.map((dato) => ({
-    departamento: minusculas(dato[9]),
-    diresa: minusculas(dato[8]),
-    distrito: minusculas(dato[11]),
-    dosis: parseInt(dato[6]),
-    edad: parseInt(dato[3]),
-    fabricantes: minusculas(dato[7]),
-    fecha: parseInt(dato[5]),
-    genero: convertirGenero(dato[4]),
-    grupo_riesgo: minusculas(dato[2]),
-    provincia: minusculas(dato[10]),
+    departamento: minusculas(dato["DEPARTAMENTO"]),
+    diresa: minusculas(dato["DIRESA"]),
+    distrito: minusculas(dato["DISTRITO"]),
+    dosis: parseInt(dato["DOSIS"]),
+    edad: parseInt(dato["EDAD"]),
+    fabricantes: minusculas(dato["FABRICANTE"]),
+    fecha: parseInt(dato["FECHA_VACUNACION"]),
+    genero: convertirGenero(dato["SEXO"]),
+    grupo_riesgo: minusculas(dato["GRUPO_RIESGO"]),
+    provincia: minusculas(dato["PROVINCIA"]),
   }));
 
 const datosExtras = (datos) => {

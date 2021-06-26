@@ -33,7 +33,7 @@ const descargarArchivo = async (caso) => {
     mensaje(nombreDelCaso, "el archivo ya existe");
   }
 
-  return await csvAJson(nombreDelArchivo);
+  return await csvAJson(nombreDelArchivo, caso === "vacunado" && ",");
 };
 
 const obtenerArchivoDescargado = (caso) => {
@@ -45,7 +45,12 @@ const csvAJson = async (nombreDelArchivo, separador = ";") => {
     const datos = [];
     const response = fs
       .createReadStream(nombreDelArchivo, { encoding: "utf-8" })
-      .pipe(csv({ separator: separador }));
+      .pipe(
+        csv({
+          separator: separador,
+          mapHeaders: ({ header, index }) => header.trim(),
+        })
+      );
     for await (const data of response) {
       datos.push(data);
     }

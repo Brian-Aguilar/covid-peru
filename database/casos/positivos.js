@@ -14,15 +14,15 @@ const crearCasosPositivos = async () => {
 
 const filtrarCasosPositivos = (datos) =>
   datos.map((dato) => ({
-    departamento: minusculas(dato[2]),
-    distrito: minusculas(dato[4]),
-    edad: parseInt(dato[6]),
-    fecha_es_tipo: convertirFechaEUaES(`${dato[8]}`, "/"),
-    fecha_es: convertirFechaEUaES(`${dato[8]}`, ""),
-    fecha: parseInt(dato[8]),
-    genero: convertirGenero(dato[7]),
-    metododx: minusculas(dato[5]),
-    provincia: minusculas(dato[3]),
+    departamento: minusculas(dato["DEPARTAMENTO"]),
+    distrito: minusculas(dato["DISTRITO"]),
+    edad: parseInt(dato["EDAD"]),
+    fecha_es_tipo: convertirFechaEUaES(`${dato["FECHA_RESULTADO"]}`, "/"),
+    fecha_es: convertirFechaEUaES(`${dato["FECHA_RESULTADO"]}`, ""),
+    fecha: parseInt(dato["FECHA_RESULTADO"]),
+    genero: convertirGenero(dato["SEXO"]),
+    metododx: minusculas(dato["METODODX"]),
+    provincia: minusculas(dato["PROVINCIA"]),
   }));
 
 const datosExtras = (datos) => {

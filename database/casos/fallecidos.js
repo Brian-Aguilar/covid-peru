@@ -8,12 +8,12 @@ const crearCasosFallecidos = async () => {
 
 const filtrarCasosFallecidos = (datos) =>
   datos.map((dato) => ({
-    departamento: minusculas(dato[7]),
-    distrito: minusculas(dato[9]),
-    edad: parseInt(dato[3]),
-    fecha: parseInt(dato[2]),
-    genero: convertirGenero(dato[4]),
-    provincia: minusculas(dato[8]),
+    departamento: minusculas(dato["DEPARTAMENTO"]),
+    distrito: minusculas(dato["DISTRITO"]),
+    edad: parseInt(dato["EDAD_DECLARADA"]),
+    fecha: parseInt(dato["FECHA_FALLECIMIENTO"]),
+    genero: convertirGenero(dato["SEXO"]),
+    provincia: minusculas(dato["PROVINCIA"]),
   }));
 
 /** Datos del archivo CSV

@@ -13,9 +13,6 @@ import Mensaje from "../../components/Mensaje";
 
 const Mapa = dynamic(() => import("../../components/Mapa"), { ssr: false });
 
-const mensajeVacuna =
-  "Por el momento funciona hasta la fecha 2 de Junio del 2021.";
-
 export default function Casos(props) {
   const { url, metadatos } = props;
   const { totalDeFechas } = useContext(FechasContext);
@@ -65,10 +62,6 @@ export default function Casos(props) {
 
       {datoPorFecha !== null && (
         <>
-          {url === "vacunados" && (
-            <Mensaje texto={mensajeVacuna} color="celeste" />
-          )}
-
           <FechasPorCasos
             caso={url}
             fechas_totales={fechas}
