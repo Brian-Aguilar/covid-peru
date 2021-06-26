@@ -1,4 +1,3 @@
-const download = require("download");
 const XLSX = require("xlsx");
 
 const {
@@ -24,6 +23,7 @@ const {
   ordernarDatosAscendente,
 } = require("../utilidades/filtros");
 const mensaje = require("../utilidades/console");
+const { descargarArchivoCSV } = require("../utilidades/descargarArchivos");
 
 const carpetaBase = "./data/sala_situacional/";
 
@@ -41,28 +41,31 @@ const crearSalaSituacional = async (fecha) => {
   const archivoJSON = `${nombreDelArchivo}.json`;
 
   if (await descargarArchivoXLSX(archivoXLSX, obtenerURL)) {
-    const datosXLSX = XLSX.readFile(archivoXLSX);
-    const nombresSheet = datosXLSX.SheetNames;
+    try {
+      const datosXLSX = XLSX.readFile(archivoXLSX);
+      const nombresSheet = datosXLSX.SheetNames;
 
-    const datosArrays = XLSX.utils
-      .sheet_to_json(datosXLSX.Sheets[nombresSheet], { header: 1 })
-      .slice(1);
+      const datosArrays = XLSX.utils
+        .sheet_to_json(datosXLSX.Sheets[nombresSheet], { header: 1 })
+        .slice(1);
 
-    const datosObtenidos = datosArrays.map((dato) => ({
-      departamento: `${dato[1]}`.toLowerCase(),
-      pcr: dato[2],
-      pr: dato[3],
-      pa: dato[4],
-      positivos: dato[5],
-      fallecidos: dato[6],
-    }));
+      const datosObtenidos = datosArrays.map((dato) => ({
+        departamento: `${dato[1]}`.toLowerCase(),
+        pcr: dato[2],
+        pr: dato[3],
+        pa: dato[4],
+        positivos: dato[5],
+        fallecidos: dato[6],
+      }));
 
-    crearArchivoJSON(
-      fecha,
-      ordernarDatosAscendente(datosObtenidos, "departamento"),
-      archivoJSON
-    );
-
+      crearArchivoJSON(
+        fecha,
+        ordernarDatosAscendente(datosObtenidos, "departamento"),
+        archivoJSON
+      );
+    } catch (error) {
+      mensaje("Sala Situacional", `${fecha} no hubo datos.`);
+    }
     eliminarArchivo(archivoXLSX);
   }
 };
@@ -76,7 +79,8 @@ const descargarArchivoXLSX = async (nombre, url) => {
   if (existeArchivo(nombre) !== true) {
     try {
       mensaje("Sala Situacional", `${fecha} se esta descargando...`);
-      crearArchivo(nombre, await download(url));
+      descargarArchivoCSV(url, nombre);
+      // crearArchivo(nombre, await download(url));
       mensaje("Sala Situacional", `${fecha} se descargo`);
       return true;
     } catch (error) {

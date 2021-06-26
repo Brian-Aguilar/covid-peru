@@ -1,3 +1,4 @@
+const cp = require("child_process");
 const fetch = require("node-fetch");
 const { obtenerURLDelCaso } = require("./nombre");
 
@@ -26,6 +27,12 @@ const obtenerUrlDelCaso = async (caso) => {
   }
 };
 
+const descargarArchivoCSV = async (url, nombreDelArchivo) => {
+  let comando = `curl -o ${nombreDelArchivo} "${url}"`;
+  cp.execSync(comando, { stdio: "inherit" });
+};
+
 module.exports = {
   obtenerUrlDelCaso,
+  descargarArchivoCSV,
 };
