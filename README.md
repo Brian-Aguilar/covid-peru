@@ -3,13 +3,16 @@
 Aquí visualizaras los últimos datos reportados por la [Sala Situacional](https://covid19.minsa.gob.pe/sala_situacional.asp) y [Datos Abiertos](https://www.datosabiertos.gob.pe/search/field_topic/covid-19-917?sort_by=changed)
 
 🇵🇪 [Página para visualizar los datos](https://covid-peru.vercel.app/)
+
 🇵🇪 [Casos Positivos](https://covid-peru.vercel.app/casos/positivos)
+
 🇵🇪 [Casos Fallecidos](https://covid-peru.vercel.app/casos/vacunados)
+
 🇵🇪 [Casos Vacunados](https://covid-peru.vercel.app/casos/vacunados)
 
 ## Datos COVID-19 Perú 🇵🇪
 
-Todos los datos se actualizan diariamente a las 6:00pm automaticamente con Github Actions:
+Todos los datos se actualizan diariamente a las 6:00 PM (hora peruana) automaticamente con Github Actions:
 [Todos los datos](https://github.com/Brian-Aguilar/covid-peru/tree/main/data)
 
 Script para que descargue los datos, los convierta a formato JSON y verifique si a aumentado algun dato por fecha para que actualice:
@@ -31,25 +34,29 @@ Dependecias:
 ```
 
 [amchars4](https://www.npmjs.com/package/@amcharts/amcharts4): Para visulizar datos.
+
 [amcharts4-geodata](https://www.npmjs.com/package/@amcharts/amcharts4-geodata): Para visualizar mapa.
+
 [next](https://nextjs.org/): Framework que hace server-rendering(front-end: React y Back-end: express) .
+
 [react](https://reactjs.org/): Libreria Front-end de javascript.
+
 [react-table](https://react-table.tanstack.com/): Visualizador de datos en tablas.
 
 Dependencias de desarrollo:
 
 ```json
 "devDependencies": {
-    "download": "8.0.0",
+    "csv-parser": "^3.0.0",
     "node-fetch": "2.6.1",
-    "papaparse": "5.3.0",
     "xlsx": "0.16.9"
   }
 ```
 
-[download](https://www.npmjs.com/package/download): Para descargar archivos.
+[csv-parser](https://www.npmjs.com/package/csv-parser): Convierte archivo .csv a formato json.
+
 [node-fetch](https://www.npmjs.com/package/node-fetch): Peticiones http en el servidor y cliente.
-[papaparse](https://www.npmjs.com/package/papaparse): Lee y escribe archivos .csv.
+
 [xlsx](https://www.npmjs.com/package/xlsx): Lee y escribe archivos .xlsx.
 
 ## Deploy

@@ -12,11 +12,11 @@ const { crearUltimosDatos } = require("./ultimos");
 const crearCaso = async (nombreDelCaso, filtrarDatos, extra = false) => {
   const { ultima_fecha, datos, ok } = await descargarArchivo(nombreDelCaso);
   if (ok === true) {
-    const datosFiltrados = filtrarDatos(datos);
+    const datosFiltrados = await filtrarDatos(datos);
     await crearCasosPorFechaSituacional(nombreDelCaso, datosFiltrados, extra);
     await crearUltimosDatos(nombreDelCaso, datosFiltrados, ultima_fecha, extra);
-    await eliminarCasoDescargado(nombreDelCaso);
   }
+  await eliminarCasoDescargado(nombreDelCaso);
 };
 
 const crearCasosPorFechaSituacional = async (caso, datos, extra) => {
